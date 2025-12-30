@@ -31,6 +31,8 @@ require "single_mqtt"
 if rtos.bsp() == "EC618" and pm and pm.PWK_MODE then pm.power(pm.PWK_MODE, false) end
 if Q_GNIO == 0 then
     log.info("启用4G模式")
+
+
     libfota2 = require "libfota2"
     sys.taskInit(function()
         local device_id = mcu.unique_id():toHex()
@@ -159,28 +161,33 @@ sys.taskInit(function()
     if Q_GNIO == 0 then
         sys.waitUntil("net_ok")
         log.info("net_ok")
+        log.info("================开机了现在是4G模式====================")
     end
     local PMA, PMB, PMC = pm.lastReson() -- 获取唤醒原因
     if PMA == 1 and PMB == 4 and PMC == 0 then
         open = 1 -- RTC唤醒
+        log.info("================RTC唤醒====================")
     elseif PMA == 2 and PMB == 4 and PMC == 0 then--雷达唤醒
         open = 2 -- IO唤醒
+        log.info("================雷达唤醒====================")
     elseif PMA == 6 and PMB == 4 and PMC == 0 then--串口RI唤醒
         open = 2 -- IO唤醒
+        log.info("================串口RI唤醒====================")
     else
         open = 0 -- 电源上电
+        log.info("================电源上电====================")
     end
-    log.info("wakeup state", PMA, PMB, PMC)
+    log.info("===================wakeup state=================", PMA, PMB, PMC)
     gpio.setup(28, 0)
     gpio.setup(35, 0)
     gpio.setup(38, 0)
     gpio.setup(37, 0)
     gpio.setup(36, 0)
     gpio.setup(34, 0)
-    mcuset()
+    -- mcuset()
 end)
 function sleep()
-    log.info("进入PSM功耗模式")
+    log.info("==================进入PSM功耗模式====================!!!!!!!!!")
     -- 彻底关闭音频
     audio.pm(0, audio.POWEROFF)
     mobile.flymode(0, true)
@@ -213,8 +220,8 @@ function sleep()
     pm.power(pm.WORK_MODE, 3)
 
     sys.wait(15000) -- 如果15s后模块重启，则说明进入极致功耗模式失败，
-    log.info("进入极致功耗模式失败，尝试重启")
-    rtos.reboot()
+    log.info("===========进入极致功耗模式失败，尝试重启=================")
+    -- rtos.reboot()
 end
 -- GPIO引脚
 sys.taskInit(function()

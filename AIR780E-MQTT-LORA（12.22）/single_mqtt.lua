@@ -80,7 +80,9 @@ if Q_GNIO == 0 then
                 mqtt_client:subscribe(sub_topic) -- 单主题订阅
                 -- mqtt_client:subscribe({[topic1]=1,[topic2]=1,[topic3]=1})--多主题订阅
             elseif event == "recv" then
+                log.info("=============== mqtt收到消息如下： =====================")
                 log.info("mqtt", "downlink", "topic", data, "payload", payload)
+
                 local subdata = json.decode(payload)
                 if subdata ~= nil then
                     if subdata.bj == 0 then
@@ -97,9 +99,13 @@ if Q_GNIO == 0 then
             end
         end)
 
+        log.info("=============== mqtt回调函数绑定完成！ =====================")
+        sys.wait(1000)
+
+
         -- mqttc自动处理重连, 除非自行关闭
         mqttc:connect()
-        sys.waitUntil("mqtt_conack")
+        -- sys.waitUntil("mqtt_conack")
         sys.publish("mqttok")
         while true do
             -- 演示等待其他task发送过来的上报信息
@@ -110,8 +116,11 @@ if Q_GNIO == 0 then
                 mqttc:publish(topic, data, qos)
             end
             -- 如果没有其他task上报, 可以写个空等待
-            -- sys.wait(1000)
+            sys.wait(1000)
+            log.info("=============== mqtt一直在等待接收消息！ =====================")
         end
+
+        log.info("=============== mqtt已经关闭无法接受消息！ =====================")
         mqttc:close()
         mqttc = nil
     end)
@@ -226,12 +235,12 @@ sys.taskInit(function()
             vbat = vbat,
             iccid = mobile.iccid()
         }
-        log.info(json.encode(vbatup))
+        log.info('==========================开机上报IMEI、电量、ICCID====================', json.encode(vbatup))
         if Q_GNIO == 0 then
             mqttc:publish(pub_topic, json.encode(vbatup), 2)
             sys.wait(1000)
-            mqttc:close()
-            mqttc = nil
+            -- mqttc:close()
+            -- mqttc = nil
         else
             if vbat < 3300 then
                 uart.write(1, "DDDD") -- 电池电量低
@@ -259,8 +268,20 @@ sys.taskInit(function()
             wait_count = wait_count + 1
         end
 
-        log.info("===========雷达已稳定在低电平，进休眠=========")
-        sys.wait(2000)
+        log.info("===========雷达已稳定在低电平，进休眠=========进入休眠前查看open值:", open)
+        sys.wait(5000)
+
+        if open == 2 then
+
+            log.info("===========雷达唤醒后马上要错误的进入PSM了，此时不应该进入，坚持30分钟！=====:", open)
+            gpio.close(gpio.WAKEUP1) -- 漏电流
+            gpio.close(gpio.PWR_KEY) -- 漏电流系统
+            pm.power(pm.USB, false)
+            pm.power(pm.WORK_MODE, 2) ---切换低功耗
+            gpio.setup(23, nil) -- 虚要关闭，防止浮空输入漏电流
+            sys.wait(30 * 60 * 1000) -- 30分钟后PSM
+
+        end
 
         sleep()
     elseif open == 2 then
@@ -269,7 +290,7 @@ sys.taskInit(function()
         pm.power(pm.USB, false)
         pm.power(pm.WORK_MODE, 2) ---切换低功耗
         gpio.setup(23, nil) -- 虚要关闭，防止浮空输入漏电流
-        log.info("雷达唤醒，30Min后休眠")
+        log.info("==================雷达唤醒，30Min后休眠==================")
         sys.wait(30 * 60 * 1000) -- 30分钟后PSM
         sleep()
     end
