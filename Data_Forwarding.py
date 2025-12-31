@@ -12,24 +12,20 @@ HOST_SUB_PREFIX = "/AIR8000/SUB/"
 SLAVE_PUB_PREFIX = "/780EHV/PUB/"
 SLAVE_SUB_PREFIX = "/780EHV/SUB/"
 
-# 主机IMEI
-HOST_IMEI = "864793080106318"
-# 从机IMEI
-SLAVE_IMEI = "866965083776697"
-
-BINDING_MAP = {
-    HOST_IMEI: [SLAVE_IMEI], 
-    SLAVE_IMEI: [HOST_IMEI]
-}
 # ===========================================
+
+# 全局变量（运行时输入）
+HOST_IMEI = ""
+SLAVE_IMEI = ""
+BINDING_MAP = {}
 
 def on_connect(client, userdata, flags, rc):
     print(f"服务器连接成功! 双向监听已启动...")
-    
+
     # 订阅 主机 的发布通道
     client.subscribe(HOST_PUB_PREFIX + "+")
     print(f"监听主机: {HOST_PUB_PREFIX}+")
-    
+
     # 订阅 从机 的发布通道
     client.subscribe(SLAVE_PUB_PREFIX + "+")
     print(f"监听从机: {SLAVE_PUB_PREFIX}+")
@@ -68,6 +64,22 @@ def on_message(client, userdata, msg):
         print(f"系统错误: {e}")
 
 if __name__ == '__main__':
+    # 手动输入 IMEI
+    print("=" * 40)
+    HOST_IMEI = input("请输入主机IMEI: ").strip()
+    SLAVE_IMEI = input("请输入从机IMEI: ").strip()
+    print("=" * 40)
+
+    # 动态构建绑定关系
+    BINDING_MAP = {
+        HOST_IMEI: [SLAVE_IMEI],
+        SLAVE_IMEI: [HOST_IMEI]
+    }
+
+    print(f"主机IMEI: {HOST_IMEI}")
+    print(f"从机IMEI: {SLAVE_IMEI}")
+    print("=" * 40)
+
     client = mqtt.Client()
     client.username_pw_set(MQTT_USER, MQTT_PASS)
     client.on_connect = on_connect
