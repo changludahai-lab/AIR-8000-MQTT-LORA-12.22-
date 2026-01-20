@@ -1,0 +1,164 @@
+/* 设备列表页样式 */
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: #fff;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-btn {
+  padding: 12rpx 24rpx;
+  background: #1890ff;
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+}
+
+.filter {
+  display: flex;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  border-top: 1rpx solid #f0f0f0;
+  gap: 20rpx;
+}
+
+.filter-item {
+  padding: 12rpx 30rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+}
+
+.filter-item.active {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.list {
+  padding: 20rpx;
+}
+
+.device-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.device-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.device-imei {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.device-tags {
+  display: flex;
+  gap: 12rpx;
+}
+
+.tag{
+  display: flex;
+  padding: 8rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.tag-info {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.tag-warning {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.tag-success {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.tag-error {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+.device-info {
+  font-size: 26rpx;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 12rpx;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  color: #999;
+  width: 160rpx;
+}
+
+.info-value {
+  color: #666;
+  flex: 1;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 150rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.empty-btn {
+  padding: 20rpx 60rpx;
+  background: #1890ff;
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 60rpx;
+  color: #999;
+}

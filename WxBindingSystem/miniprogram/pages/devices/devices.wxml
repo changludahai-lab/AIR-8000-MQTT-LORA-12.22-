@@ -1,0 +1,76 @@
+<!-- 设备列表页 -->
+<view class="page">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-title">设备管理</view>
+    <view class="header-btn" bindtap="onAddDevice">+ 添加</view>
+  </view>
+
+  <!-- 筛选 -->
+  <view class="filter">
+    <view 
+      class="filter-item {{filterType === '' ? 'active' : ''}}"
+      data-type=""
+      bindtap="onFilterChange"
+    >
+      全部
+    </view>
+    <view 
+      class="filter-item {{filterType === 'indoor' ? 'active' : ''}}"
+      data-type="indoor"
+      bindtap="onFilterChange"
+    >
+      室内机
+    </view>
+    <view 
+      class="filter-item {{filterType === 'outdoor' ? 'active' : ''}}"
+      data-type="outdoor"
+      bindtap="onFilterChange"
+    >
+      室外机
+    </view>
+  </view>
+
+  <!-- 设备列表 -->
+  <view class="list" wx:if="{{devices.length > 0}}">
+    <view class="device-card" wx:for="{{devices}}" wx:key="id">
+      <view class="device-header">
+        <view class="device-imei">{{item.imei}}</view>
+        <view class="device-tags">
+          <view class="tag {{item.type === 'indoor' ? 'tag-info' : 'tag-warning'}}">
+            {{item.type === 'indoor' ? '室内机' : '室外机'}}
+          </view>
+          <view class="tag {{item.online ? 'tag-success' : 'tag-error'}}">
+            {{item.online ? '在线' : '离线'}}
+          </view>
+        </view>
+      </view>
+      <view class="device-info">
+        <view class="info-row">
+          <text class="info-label">绑定加油站:</text>
+          <text class="info-value">{{item.station_name || '未绑定'}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.last_seen}}">
+          <text class="info-label">最后在线:</text>
+          <text class="info-value">{{item.last_seen}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.type === 'outdoor' && item.vbat}}">
+          <text class="info-label">电池电压:</text>
+          <text class="info-value">{{item.vbat}}V</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && devices.length === 0}}">
+    <view class="empty-icon">📱</view>
+    <view class="empty-text">暂无设备</view>
+    <view class="empty-btn" bindtap="onAddDevice">添加设备</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

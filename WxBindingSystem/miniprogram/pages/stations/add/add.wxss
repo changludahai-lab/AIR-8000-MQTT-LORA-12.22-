@@ -1,0 +1,57 @@
+/* 新建加油站页样式 */
+/* 关联需求: REQ-3 - 加油站管理 - 新建加油站 */
+
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+/* 表单错误状态 */
+.form-item-error {
+  border-bottom-color: #ff4d4f !important;
+}
+
+.form-item-error .form-input {
+  color: #ff4d4f;
+}
+
+/* 错误提示文字 */
+.form-error {
+  padding: 8rpx 0 8rpx 160rpx;
+  font-size: 24rpx;
+  color: #ff4d4f;
+  background: #fff;
+  margin-top: -1rpx;
+}
+
+/* 提示信息 */
+.form-tips {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.tips-icon {
+  margin-right: 8rpx;
+}
+
+.tips-text {
+  color: #999;
+}
+
+/* 按钮区域 */
+.btn-area {
+  padding: 40rpx 0;
+}
+
+.btn-area .btn {
+  margin-bottom: 20rpx;
+}
+
+.btn-area .btn:last-child {
+  margin-bottom: 0;
+}

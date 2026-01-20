@@ -92,16 +92,23 @@ def get_station(station_id):
     if not station:
         return jsonify({'code': 404, 'message': '加油站不存在', 'data': None}), 404
     
+    # 计算在线阈值
+    offline_threshold = datetime.now() - timedelta(hours=current_app.config['DEVICE_OFFLINE_HOURS'])
+    
     # 获取绑定的设备
     devices = Device.query.filter_by(station_id=station_id).all()
     indoor_device = None
     outdoor_devices = []
     
     for device in devices:
+        device_dict = device.to_dict()
+        # 计算在线状态
+        device_dict['online'] = device.last_seen and device.last_seen > offline_threshold
+        
         if device.type == 'indoor':
-            indoor_device = device.to_dict()
+            indoor_device = device_dict
         else:
-            outdoor_devices.append(device.to_dict())
+            outdoor_devices.append(device_dict)
     
     result = station.to_dict()
     result['indoor_device'] = indoor_device
@@ -115,7 +122,7 @@ def get_station(station_id):
 
 
 @station_bp.route('', methods=['POST'])
-@admin_required
+@jwt_required()
 def create_station():
     """创建加油站"""
     from app.models import Station
@@ -155,7 +162,7 @@ def create_station():
 
 
 @station_bp.route('/<int:station_id>', methods=['PUT'])
-@admin_required
+@jwt_required()
 def update_station(station_id):
     """更新加油站"""
     from app.models import Station
@@ -196,7 +203,7 @@ def update_station(station_id):
 
 
 @station_bp.route('/<int:station_id>', methods=['DELETE'])
-@admin_required
+@jwt_required()
 def delete_station(station_id):
     """删除加油站"""
     from app.models import Station, Device

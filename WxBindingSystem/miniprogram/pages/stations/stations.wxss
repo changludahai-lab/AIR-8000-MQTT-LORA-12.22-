@@ -1,0 +1,147 @@
+/* 加油站列表页样式 */
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-btn {
+  padding: 12rpx 24rpx;
+  background: #1890ff;
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+}
+
+.list {
+  padding: 20rpx;
+}
+
+.station-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.station-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.station-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.station-code {
+  font-size: 24rpx;
+  color: #999;
+  background: #f5f5f5;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+/* 设备绑定数量样式 */
+.device-count {
+  display: flex;
+  justify-content: flex-start;
+  gap: 40rpx;
+  padding: 16rpx 0;
+  margin-top: 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.device-count-item {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.device-icon {
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+
+.device-icon.indoor {
+  color: #1890ff;
+}
+
+.device-icon.outdoor {
+  color: #52c41a;
+}
+
+.device-label {
+  margin-right: 8rpx;
+  color: #999;
+}
+
+.device-num {
+  font-weight: bold;
+  color: #333;
+  min-width: 32rpx;
+  text-align: center;
+}
+
+.station-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12rpx;
+}
+
+.arrow {
+  font-size: 40rpx;
+  color: #ccc;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 150rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.empty-btn {
+  padding: 20rpx 60rpx;
+  background: #1890ff;
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 60rpx;
+  color: #999;
+}

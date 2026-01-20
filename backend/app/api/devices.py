@@ -165,6 +165,16 @@ def bind_device(imei):
     if not station:
         return jsonify({'code': 404, 'message': '加油站不存在', 'data': None}), 404
     
+    # 检查设备是否已被其他加油站绑定
+    if device.station_id and device.station_id != station_id:
+        bound_station = Station.query.get(device.station_id)
+        bound_station_name = bound_station.name if bound_station else '未知加油站'
+        return jsonify({
+            'code': 409,
+            'message': f'该设备已被【{bound_station_name}】绑定，无法再次绑定',
+            'data': None
+        }), 409
+    
     # 室内机绑定检查：每个加油站只能有一个室内机
     if device.type == 'indoor':
         existing_indoor = Device.query.filter_by(

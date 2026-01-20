@@ -1,0 +1,66 @@
+<!-- 添加设备页 -->
+<!-- 关联需求: REQ-10 - 设备管理 - 手动添加设备 -->
+<view class="page">
+  <!-- 表单区域 -->
+  <view class="form card">
+    <!-- IMEI输入（必填） -->
+    <view class="form-item {{errors.imei ? 'form-item-error' : ''}}">
+      <view class="form-label required">IMEI</view>
+      <view class="form-input-wrap">
+        <input 
+          class="form-input" 
+          placeholder="请输入设备IMEI"
+          placeholder-class="form-input-placeholder"
+          value="{{imei}}"
+          maxlength="20"
+          bindinput="onImeiInput"
+        />
+        <view class="scan-btn" bindtap="onScan">
+          <text class="scan-icon">📷</text>
+          <text class="scan-text">扫码</text>
+        </view>
+      </view>
+    </view>
+    <view class="form-error" wx:if="{{errors.imei}}">{{errors.imei}}</view>
+
+    <!-- 设备类型选择（必填） -->
+    <view class="form-item">
+      <view class="form-label required">设备类型</view>
+      <radio-group class="type-group" bindchange="onTypeChange">
+        <label class="type-item {{type === 'indoor' ? 'type-item-active' : ''}}">
+          <radio value="indoor" checked="{{type === 'indoor'}}" color="#1890ff" />
+          <text class="type-text">室内机</text>
+        </label>
+        <label class="type-item {{type === 'outdoor' ? 'type-item-active' : ''}}">
+          <radio value="outdoor" checked="{{type === 'outdoor'}}" color="#1890ff" />
+          <text class="type-text">室外机</text>
+        </label>
+      </radio-group>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="form-tips">
+    <text class="tips-icon">💡</text>
+    <text class="tips-text">可以手动输入IMEI或点击扫码按钮扫描设备二维码</text>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="btn-area">
+    <button 
+      class="btn btn-primary btn-block" 
+      bindtap="onSubmit"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      {{loading ? '添加中...' : '添加设备'}}
+    </button>
+    <button 
+      class="btn btn-default btn-block" 
+      bindtap="onCancel"
+      disabled="{{loading}}"
+    >
+      取消
+    </button>
+  </view>
+</view>

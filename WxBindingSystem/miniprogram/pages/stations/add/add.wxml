@@ -1,0 +1,105 @@
+<!-- 新建加油站页 -->
+<!-- 关联需求: REQ-3 - 加油站管理 - 新建加油站 -->
+<view class="page">
+  <!-- 表单区域 -->
+  <view class="form card">
+    <!-- 名称（必填） -->
+    <view class="form-item {{errors.name ? 'form-item-error' : ''}}">
+      <view class="form-label required">名称</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入加油站名称"
+        placeholder-class="form-input-placeholder"
+        value="{{name}}"
+        maxlength="50"
+        data-field="name"
+        bindinput="onInput"
+      />
+    </view>
+    <view class="form-error" wx:if="{{errors.name}}">{{errors.name}}</view>
+
+    <!-- 编号（必填） -->
+    <view class="form-item {{errors.code ? 'form-item-error' : ''}}">
+      <view class="form-label required">编号</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入加油站编号"
+        placeholder-class="form-input-placeholder"
+        value="{{code}}"
+        maxlength="20"
+        data-field="code"
+        bindinput="onInput"
+      />
+    </view>
+    <view class="form-error" wx:if="{{errors.code}}">{{errors.code}}</view>
+
+    <!-- 地址（可选） -->
+    <view class="form-item">
+      <view class="form-label">地址</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入地址（选填）"
+        placeholder-class="form-input-placeholder"
+        value="{{address}}"
+        maxlength="200"
+        data-field="address"
+        bindinput="onInput"
+      />
+    </view>
+
+    <!-- 联系人（可选） -->
+    <view class="form-item">
+      <view class="form-label">联系人</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入联系人（选填）"
+        placeholder-class="form-input-placeholder"
+        value="{{contact}}"
+        maxlength="20"
+        data-field="contact"
+        bindinput="onInput"
+      />
+    </view>
+
+    <!-- 电话（可选） -->
+    <view class="form-item {{errors.phone ? 'form-item-error' : ''}}">
+      <view class="form-label">电话</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入联系电话（选填）"
+        placeholder-class="form-input-placeholder"
+        type="number"
+        value="{{phone}}"
+        maxlength="15"
+        data-field="phone"
+        bindinput="onInput"
+      />
+    </view>
+    <view class="form-error" wx:if="{{errors.phone}}">{{errors.phone}}</view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="form-tips">
+    <text class="tips-icon">💡</text>
+    <text class="tips-text">带 * 的为必填项</text>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="btn-area">
+    <button 
+      class="btn btn-primary btn-block" 
+      bindtap="onSubmit"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      {{loading ? '创建中...' : '创建加油站'}}
+    </button>
+    <button 
+      class="btn btn-default btn-block" 
+      bindtap="onCancel"
+      disabled="{{loading}}"
+    >
+      取消
+    </button>
+  </view>
+</view>

@@ -1,0 +1,52 @@
+<!-- 登录页 -->
+<!-- 关联需求: REQ-1 用户登录 -->
+<view class="login-page">
+  <view class="login-header">
+    <view class="logo">⛽</view>
+    <view class="title">设备绑定系统</view>
+    <view class="subtitle">加油站液位监控平台</view>
+  </view>
+
+  <view class="login-form">
+    <view class="form-item">
+      <view class="form-icon">👤</view>
+      <input 
+        class="form-input" 
+        type="text"
+        placeholder="请输入用户名" 
+        value="{{username}}"
+        bindinput="onUsernameInput"
+        confirm-type="next"
+        maxlength="50"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="form-icon">🔒</view>
+      <input 
+        class="form-input" 
+        type="text"
+        placeholder="请输入密码" 
+        password="{{true}}"
+        value="{{password}}"
+        bindinput="onPasswordInput"
+        confirm-type="done"
+        bindconfirm="onLogin"
+        maxlength="50"
+      />
+    </view>
+
+    <button 
+      class="login-btn" 
+      bindtap="onLogin"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      {{loading ? '登录中...' : '登录'}}
+    </button>
+  </view>
+
+  <view class="login-footer">
+    <text>© 2026 加油站液位监控系统</text>
+  </view>
+</view>

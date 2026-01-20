@@ -1,0 +1,374 @@
+/* 加油站详情页样式 */
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 区块样式 */
+.section {
+  margin-bottom: 24rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 30rpx 16rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 8rpx;
+}
+
+.section-action {
+  margin-left: auto;
+  font-size: 26rpx;
+  color: #1890ff;
+  padding: 8rpx 0;
+}
+
+/* 卡片样式 */
+.card {
+  margin: 0 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 表单样式 */
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  width: 140rpx;
+  font-size: 28rpx;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.form-label.required::before {
+  content: '*';
+  color: #ff4d4f;
+  margin-right: 4rpx;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  min-height: 40rpx;
+  text-align: right;
+}
+
+.form-input.editable {
+  background: #f9f9f9;
+  padding: 12rpx 16rpx;
+  border-radius: 8rpx;
+  text-align: left;
+}
+
+.form-input[disabled] {
+  color: #333;
+}
+
+.form-input-placeholder {
+  color: #bbb;
+}
+
+
+/* 设备项样式 */
+.device-item {
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  position: relative;
+}
+
+.device-item:last-child {
+  border-bottom: none;
+}
+
+/* 设备信息行 - 状态、IMEI、电压横向排列 */
+.device-row {
+  width: calc(100% - 180rpx);
+ display: grid;
+ grid-template-columns: repeat(3,1fr);
+  text-align: left;
+}
+.shinei .device-row{
+  grid-template-columns: repeat(2,1fr);
+}
+
+.status-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.status-text.online {
+  color: #52c41a;
+}
+
+.status-text.offline {
+  color: #ff4d4f;
+}
+
+.device-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+
+.device-icon.indoor {
+  background: #e6f7ff;
+}
+
+.device-icon.outdoor {
+  background: #f6ffed;
+}
+
+.device-imei {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.device-vbat {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #fa8c16;
+  padding-left: 50rpx;
+}
+
+/* 设备操作行 - 最后在线时间和解绑按钮 */
+.device-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12rpx;
+}
+
+.device-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.device-unbind {
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  color: #ff4d4f;
+  position: absolute;
+  top: 0;bottom: 0;right: 0;margin: auto;
+  padding: 18rpx 20rpx;
+}
+
+.device-unbind:active {
+  background: #fff2f0;
+  border-radius: 8rpx;
+}
+
+/* 状态标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  font-size: 22rpx;
+}
+
+.tag-success {
+  background: #f6ffed;
+  color: #52c41a;
+  border: 1rpx solid #b7eb8f;
+}
+
+.tag-error {
+  background: #fff2f0;
+  color: #ff4d4f;
+  border: 1rpx solid #ffccc7;
+}
+
+/* 状态文字样式 */
+.status-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.status-text.online {
+  color: #52c41a;
+}
+
+.status-text.offline {
+  color: #ff4d4f;
+}
+
+/* 空状态提示 */
+.empty-tip {
+  margin: 0 20rpx;
+  padding: 48rpx 24rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-tip .empty-icon {
+  font-size: 48rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.empty-tip .empty-hint {
+  font-size: 24rpx;
+  color: #bbb;
+  margin-top: 8rpx;
+}
+
+/* 危险操作区域 */
+.danger-zone {
+  padding: 40rpx 20rpx 60rpx;
+  margin-top: 20rpx;
+}
+
+.danger-title {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+  padding-left: 10rpx;
+}
+
+.danger-hint {
+  font-size: 24rpx;
+  color: #bbb;
+  text-align: center;
+  margin-top: 16rpx;
+}
+
+/* 按钮样式 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn-block {
+  margin: 20rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  color: #fff;
+}
+
+.btn-primary:active {
+  background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+}
+
+.btn-primary[disabled] {
+  background: #bae7ff;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%);
+  color: #fff;
+}
+
+.btn-danger:active {
+  background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+}
+
+.btn-small {
+  height: 64rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  padding: 0 40rpx;
+  display: inline-flex;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 150rpx 0;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 150rpx 0;
+}
+
+.error-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.error-text {
+  font-size: 30rpx;
+  color: #999;
+  margin-bottom: 30rpx;
+}

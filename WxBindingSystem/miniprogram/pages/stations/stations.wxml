@@ -1,0 +1,52 @@
+<!-- 加油站列表页 -->
+<view class="page">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-title">加油站管理</view>
+    <view class="header-btn" bindtap="onAddStation">+ 新建</view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list" wx:if="{{stations.length > 0}}">
+    <view 
+      class="station-card" 
+      wx:for="{{stations}}" 
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onStationTap"
+    >
+      <view class="station-header">
+        <view class="station-name">{{item.name}}</view>
+        <view class="station-code">{{item.code}}</view>
+      </view>
+      <!-- 设备绑定数量 -->
+      <view class="device-count">
+        <view class="device-count-item">
+          <text class="device-icon indoor">📟</text>
+          <text class="device-label">室内机</text>
+          <text class="device-num">{{item.indoor_count || 0}}</text>
+        </view>
+        <view class="device-count-item">
+          <text class="device-icon outdoor">📡</text>
+          <text class="device-label">室外机</text>
+          <text class="device-num">{{item.outdoor_count || 0}}</text>
+        </view>
+      </view>
+      <view class="station-footer">
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && stations.length === 0}}">
+    <view class="empty-icon">⛽</view>
+    <view class="empty-text">暂无加油站</view>
+    <view class="empty-btn" bindtap="onAddStation">立即新建</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

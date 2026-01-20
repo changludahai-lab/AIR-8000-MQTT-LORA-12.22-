@@ -1,0 +1,193 @@
+<!-- 加油站详情页 -->
+<!-- REQ-4: 编辑加油站信息 -->
+<!-- REQ-5: 删除加油站 -->
+<!-- REQ-6: 扫码绑定室内机 -->
+<!-- REQ-7: 扫码绑定室外机 -->
+<!-- REQ-8: 设备解绑 -->
+
+<view class="page" wx:if="{{station}}">
+  <!-- 基本信息区域 (REQ-4) -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">基本信息</text>
+      <text class="section-action" bindtap="toggleEdit">{{editing ? '取消' : '编辑'}}</text>
+    </view>
+    
+    <view class="card">
+      <!-- 名称（必填） -->
+      <view class="form-item">
+        <view class="form-label {{editing ? 'required' : ''}}">名称</view>
+        <input 
+          class="form-input {{editing ? 'editable' : ''}}" 
+          value="{{form.name}}"
+          disabled="{{!editing}}"
+          placeholder="{{editing ? '请输入加油站名称' : '未填写'}}"
+          data-field="name"
+          bindinput="onInput"
+        />
+      </view>
+      <!-- 编号（必填） -->
+      <view class="form-item">
+        <view class="form-label {{editing ? 'required' : ''}}">编号</view>
+        <input 
+          class="form-input {{editing ? 'editable' : ''}}" 
+          value="{{form.code}}"
+          disabled="{{!editing}}"
+          placeholder="{{editing ? '请输入加油站编号' : '未填写'}}"
+          data-field="code"
+          bindinput="onInput"
+        />
+      </view>
+      <!-- 地址 -->
+      <view class="form-item">
+        <view class="form-label">地址</view>
+        <input 
+          class="form-input {{editing ? 'editable' : ''}}" 
+          value="{{form.address}}"
+          disabled="{{!editing}}"
+          placeholder="{{editing ? '请输入地址' : '未填写'}}"
+          data-field="address"
+          bindinput="onInput"
+        />
+      </view>
+      <!-- 联系人 -->
+      <view class="form-item">
+        <view class="form-label">联系人</view>
+        <input 
+          class="form-input {{editing ? 'editable' : ''}}" 
+          value="{{form.contact}}"
+          disabled="{{!editing}}"
+          placeholder="{{editing ? '请输入联系人' : '未填写'}}"
+          data-field="contact"
+          bindinput="onInput"
+        />
+      </view>
+      <!-- 电话 -->
+      <view class="form-item">
+        <view class="form-label">电话</view>
+        <input 
+          class="form-input {{editing ? 'editable' : ''}}" 
+          type="number"
+          value="{{form.phone}}"
+          disabled="{{!editing}}"
+          placeholder="{{editing ? '请输入联系电话' : '未填写'}}"
+          data-field="phone"
+          bindinput="onInput"
+        />
+      </view>
+    </view>
+
+    <!-- 保存按钮 -->
+    <button 
+      class="btn btn-primary btn-block" 
+      wx:if="{{editing}}" 
+      bindtap="onSave"
+      disabled="{{saving}}"
+    >
+      {{saving ? '保存中...' : '保存修改'}}
+    </button>
+  </view>
+
+  <!-- 室内机区域 (REQ-6, REQ-8) -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">室内机</text>
+      <text class="section-tip">（限1台）</text>
+      <text class="section-action" bindtap="onBindIndoor">📷 扫码绑定</text>
+    </view>
+    
+    <!-- 已绑定的室内机 -->
+    <view class="card shinei" wx:if="{{station.indoor_device}}">
+      <view class="device-item">
+        <view class="device-row">
+          <text class="device-imei">{{station.indoor_device.imei}}</text>
+          <text class="status-text {{station.indoor_device.online ? 'online' : 'offline'}}">{{station.indoor_device.online ? '在线' : '离线'}}</text>
+        </view>
+        <view class="device-actions">
+          <view class="device-time" wx:if="{{station.indoor_device.last_seen}}">
+            最后在线: {{station.indoor_device.last_seen}}
+          </view>
+        </view>
+        <view 
+            class="device-unbind" 
+            data-imei="{{station.indoor_device.imei}}"
+            data-type="indoor"
+            bindtap="onUnbind"
+          >
+            解绑
+          </view>
+      </view>
+    </view>
+    
+    <!-- 未绑定提示 -->
+    <view class="empty-tip" wx:else>
+      <view class="empty-icon">📟</view>
+      <text>暂未绑定室内机</text>
+      <text class="empty-hint">点击右上角"扫码绑定"添加设备</text>
+    </view>
+  </view>
+
+  <!-- 室外机区域 (REQ-7, REQ-8) -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">室外机</text>
+      <text class="section-tip">（可多台）</text>
+      <text class="section-action" bindtap="onBindOutdoor">📷 扫码绑定</text>
+    </view>
+    
+    <!-- 已绑定的室外机列表 -->
+    <view class="card" wx:if="{{station.outdoor_devices && station.outdoor_devices.length > 0}}">
+      <view 
+        class="device-item" 
+        wx:for="{{station.outdoor_devices}}" 
+        wx:key="imei"
+      >
+        <view class="device-row">
+          <text class="device-imei">{{item.imei}}</text>
+          <text class="device-vbat" wx:if="{{item.vbat}}">{{item.vbat}}V</text>
+          <text class="status-text {{item.online ? 'online' : 'offline'}}">{{item.online ? '在线' : '离线'}}</text>
+        </view>
+        <view class="device-actions">
+          <view class="device-time" wx:if="{{item.last_seen}}">
+            最后在线: {{item.last_seen}}
+          </view>
+        </view>
+        <view 
+            class="device-unbind" 
+            data-imei="{{item.imei}}"
+            data-type="outdoor"
+            bindtap="onUnbind"
+          >
+            解绑
+          </view>
+      </view>
+    </view>
+    
+    <!-- 未绑定提示 -->
+    <view class="empty-tip" wx:else>
+      <view class="empty-icon">📡</view>
+      <text>暂未绑定室外机</text>
+      <text class="empty-hint">点击右上角"扫码绑定"添加设备</text>
+    </view>
+  </view>
+
+  <!-- 危险操作区域 (REQ-5) -->
+  <view class="danger-zone">
+    <view class="danger-title">危险操作</view>
+    <button class="btn btn-danger btn-block" bindtap="onDelete">删除加油站</button>
+    <view class="danger-hint">删除前需先解绑所有设备</view>
+  </view>
+</view>
+
+<!-- 加载中状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <view class="loading-spinner"></view>
+  <text class="loading-text">加载中...</text>
+</view>
+
+<!-- 空状态（加载失败） -->
+<view class="error-container" wx:if="{{!loading && !station}}">
+  <view class="error-icon">😕</view>
+  <text class="error-text">加载失败</text>
+  <button class="btn btn-primary btn-small" bindtap="loadStation">重新加载</button>
+</view>

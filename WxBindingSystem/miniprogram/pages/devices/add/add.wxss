@@ -1,0 +1,123 @@
+/* 添加设备页样式 */
+/* 关联需求: REQ-10 - 设备管理 - 手动添加设备 */
+
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+/* 表单输入包装 */
+.form-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.form-input-wrap .form-input {
+  flex: 1;
+}
+
+/* 扫码按钮 */
+.scan-btn {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 20rpx;
+  background: #e6f7ff;
+  border-radius: 8rpx;
+  margin-left: 16rpx;
+}
+
+.scan-btn:active {
+  background: #bae7ff;
+}
+
+.scan-icon {
+  font-size: 36rpx;
+  margin-right: 8rpx;
+}
+
+.scan-text {
+  font-size: 26rpx;
+  color: #1890ff;
+}
+
+/* 设备类型选择 */
+.type-group {
+  flex: 1;
+  display: flex;
+  gap: 40rpx;
+}
+
+.type-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  border-radius: 8rpx;
+  background: #fafafa;
+  transition: all 0.2s;
+}
+
+.type-item-active {
+  background: #e6f7ff;
+}
+
+.type-item radio {
+  margin-right: 12rpx;
+}
+
+.type-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 表单错误状态 */
+.form-item-error {
+  border-bottom-color: #ff4d4f !important;
+}
+
+.form-item-error .form-input {
+  color: #ff4d4f;
+}
+
+/* 错误提示文字 */
+.form-error {
+  padding: 8rpx 0 8rpx 160rpx;
+  font-size: 24rpx;
+  color: #ff4d4f;
+  background: #fff;
+  margin-top: -1rpx;
+}
+
+/* 提示信息 */
+.form-tips {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx 24rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.tips-icon {
+  margin-right: 8rpx;
+  flex-shrink: 0;
+}
+
+.tips-text {
+  color: #999;
+  line-height: 1.5;
+}
+
+/* 按钮区域 */
+.btn-area {
+  padding: 40rpx 0;
+}
+
+.btn-area .btn {
+  margin-bottom: 20rpx;
+}
+
+.btn-area .btn:last-child {
+  margin-bottom: 0;
+}

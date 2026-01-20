@@ -72,11 +72,11 @@ class Station(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now, comment='更新时间')
     
     # 关联的设备
-    devices = db.relationship('Device', backref='station', lazy='dynamic')
+    devices = db.relationship('Device', backref='station', lazy='select')
     
-    def to_dict(self):
+    def to_dict(self, include_device_count=True):
         """转换为字典"""
-        return {
+        result = {
             'id': self.id,
             'name': self.name,
             'code': self.code,
@@ -87,6 +87,17 @@ class Station(db.Model):
             'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S') if self.created_at else None,
             'updated_at': self.updated_at.strftime('%Y-%m-%d %H:%M:%S') if self.updated_at else None
         }
+        
+        # 包含设备数量统计
+        if include_device_count:
+            from app.models import Device
+            indoor_count = Device.query.filter_by(station_id=self.id, type='indoor').count()
+            outdoor_count = Device.query.filter_by(station_id=self.id, type='outdoor').count()
+            result['indoor_count'] = indoor_count
+            result['outdoor_count'] = outdoor_count
+            result['device_count'] = indoor_count + outdoor_count
+        
+        return result
 
 
 class Device(db.Model):
