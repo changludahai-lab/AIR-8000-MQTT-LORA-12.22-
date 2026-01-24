@@ -184,7 +184,7 @@ Page({
       }
 
       // 绑定设备到加油站
-      const res = await bindDevice(imei, this.data.id)
+      const res = await bindDevice(imei, this.data.id, type)
       
       wx.hideLoading()
       
@@ -201,7 +201,14 @@ Page({
         return
       }
       
-      // 错误已在 request.ts 中显示，这里不再重复显示
+      // 显示错误弹窗（使用 showModal 避免被 hideLoading 影响）
+      const errorMsg = (err && err.message) || '绑定失败'
+      wx.showModal({
+        title: '绑定失败',
+        content: errorMsg,
+        showCancel: false,
+        confirmText: '知道了'
+      })
       console.error('绑定失败:', err)
     }
   },

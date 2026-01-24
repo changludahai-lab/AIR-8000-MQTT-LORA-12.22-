@@ -255,7 +255,7 @@ def handle_outdoor_message(imei, payload):
 
 
 def auto_register_device(imei, device_type):
-    """自动注册设备"""
+    """自动注册设备，如果设备类型不匹配则修正并解绑"""
     from app.models import Device
     from app import db
     
@@ -272,5 +272,16 @@ def auto_register_device(imei, device_type):
         db.session.add(device)
         db.session.commit()
         print(f"自动注册设备: {imei} ({device_type})")
+    elif device.type != device_type:
+        # 设备类型不匹配，修正类型并解绑
+        old_type = device.type
+        old_type_name = '室内机' if old_type == 'indoor' else '室外机'
+        new_type_name = '室内机' if device_type == 'indoor' else '室外机'
+        
+        print(f"设备 {imei} 类型不匹配: 绑定为{old_type_name}，实际为{new_type_name}，自动修正并解绑")
+        
+        device.type = device_type
+        device.station_id = None  # 解绑
+        db.session.commit()
     
     return device

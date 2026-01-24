@@ -161,6 +161,8 @@ def bind_device(imei):
         return jsonify({'code': 400, 'message': '请指定加油站ID', 'data': None}), 400
     
     station_id = data['station_id']
+    expected_type = data.get('expected_type')  # 期望的设备类型
+    
     station = Station.query.get(station_id)
     if not station:
         return jsonify({'code': 404, 'message': '加油站不存在', 'data': None}), 404
@@ -172,6 +174,16 @@ def bind_device(imei):
         return jsonify({
             'code': 409,
             'message': f'该设备已被【{bound_station_name}】绑定，无法再次绑定',
+            'data': None
+        }), 409
+    
+    # 设备类型校验：如果设备已存在且指定了期望类型，检查类型是否匹配
+    if expected_type and device.type != expected_type:
+        actual_type_name = '室内机' if device.type == 'indoor' else '室外机'
+        expected_type_name = '室内机' if expected_type == 'indoor' else '室外机'
+        return jsonify({
+            'code': 409,
+            'message': f'该设备是{actual_type_name}，不能绑定为{expected_type_name}',
             'data': None
         }), 409
     

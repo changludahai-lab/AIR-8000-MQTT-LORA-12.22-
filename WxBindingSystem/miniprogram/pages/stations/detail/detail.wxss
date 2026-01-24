@@ -179,10 +179,13 @@
   font-size: 26rpx;
   display: flex;
   align-items: center;
-  color: #ff4d4f;
+  color: #fff;
   position: absolute;
   top: 0;bottom: 0;right: 0;margin: auto;
-  padding: 18rpx 20rpx;
+  padding: 18rpx 30rpx;
+  background: #40a9ff;
+  height: 40rpx;
+  border-radius: 8rpx;
 }
 
 .device-unbind:active {

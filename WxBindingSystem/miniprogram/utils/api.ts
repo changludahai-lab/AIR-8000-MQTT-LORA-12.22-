@@ -203,9 +203,10 @@ export function createDevice(data: CreateDeviceParams): Promise<ApiResponse<Devi
  * 绑定设备到加油站
  * @param imei 设备IMEI
  * @param stationId 加油站ID
+ * @param expectedType 期望的设备类型（用于校验已存在设备的类型）
  */
-export function bindDevice(imei: string, stationId: number): Promise<ApiResponse<Device>> {
-  return post<Device>(`/api/devices/${imei}/bind`, { station_id: stationId })
+export function bindDevice(imei: string, stationId: number, expectedType?: 'indoor' | 'outdoor'): Promise<ApiResponse<Device>> {
+  return post<Device>(`/api/devices/${imei}/bind`, { station_id: stationId, expected_type: expectedType }, { showError: false })
 }
 
 /**
